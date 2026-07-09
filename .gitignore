@@ -31,3 +31,6 @@ walkthrough.md
 task.md
 implementation_plan.md
 knowledge_base.md
+
+# Secure configurations
+attendanceapp/database/config.php
