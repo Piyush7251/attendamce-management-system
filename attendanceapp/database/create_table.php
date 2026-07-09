@@ -54,6 +54,24 @@ $tables = [
     )"
 ];
 
+// Drop existing tables to force schema updates
+$tables_to_drop = [
+    "attendance_details",
+    "course_allotment",
+    "course_registration",
+    "student_details",
+    "course_details",
+    "faculty_details",
+    "session_details"
+];
+foreach ($tables_to_drop as $tname) {
+    try {
+        $dbo->conn->exec("DROP TABLE IF EXISTS {$tname}");
+    } catch (PDOException $e) {
+        // Ignore
+    }
+}
+
 foreach ($tables as $name => $query) {
     try {
         $dbo->conn->exec($query);
