@@ -112,6 +112,8 @@ session_start();
                     <div class="tab-container">
                         <button class="admin-tab active" id="tabAllocations">Course Allocations</button>
                         <button class="admin-tab" id="tabManageCourses">Manage Courses</button>
+                        <button class="admin-tab" id="tabManageFaculty">Manage Faculty</button>
+                        <button class="admin-tab" id="tabManageStudents">Manage Students</button>
                     </div>
                 </div>
                 
@@ -129,6 +131,26 @@ session_start();
                     </div>
                     <div class="studentlist-area" id="courseListArea">
                         <!-- Courses will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Tab 3 content: Faculty Management -->
+                <div class="tab-content" id="manageFacultyTabContent" style="display: none;">
+                    <div class="course-stats" id="facultyStatsArea" style="margin-bottom: 20px; font-weight: 600; font-size: 1.1em; color: #a0aec0; padding-left: 10px;">
+                        <!-- Faculty stats will load here -->
+                    </div>
+                    <div class="studentlist-area" id="facultyListArea">
+                        <!-- Faculty will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Tab 4 content: Student Management -->
+                <div class="tab-content" id="manageStudentsTabContent" style="display: none;">
+                    <div class="course-stats" id="studentStatsArea" style="margin-bottom: 20px; font-weight: 600; font-size: 1.1em; color: #a0aec0; padding-left: 10px;">
+                        <!-- Student stats will load here -->
+                    </div>
+                    <div class="studentlist-area" id="studentListArea">
+                        <!-- Students will be loaded here -->
                     </div>
                 </div>
             </section>
@@ -157,6 +179,56 @@ session_start();
                 <button id="btnCancelEdit" class="btn-secondary">Cancel</button>
             </div>
             <div id="editCourseMsg" style="margin-top: 10px; font-size: 0.9em;"></div>
+        </div>
+     </div>
+
+     <!-- Edit Faculty Modal Overlay -->
+     <div id="editFacultyModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 class="modal-title">Edit Faculty</h3>
+            <input type="hidden" id="editFacultyId">
+            <div class="form-group">
+                <label>Faculty Name</label>
+                <input type="text" id="txtEditFacultyName" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="txtEditFacultyUsername" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Password (leave blank to keep unchanged)</label>
+                <input type="password" id="txtEditFacultyPassword" class="form-input" placeholder="New Password">
+            </div>
+            <div class="modal-actions">
+                <button id="btnSaveFaculty" class="btn-primary">Save Changes</button>
+                <button id="btnCancelEditFaculty" class="btn-secondary">Cancel</button>
+            </div>
+            <div id="editFacultyMsg" style="margin-top: 10px; font-size: 0.9em;"></div>
+        </div>
+     </div>
+
+     <!-- Edit Student Modal Overlay -->
+     <div id="editStudentModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 class="modal-title">Edit Student</h3>
+            <input type="hidden" id="editStudentId">
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" id="txtEditStudentName" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Roll Number</label>
+                <input type="text" id="txtEditStudentRoll" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Class/Group</label>
+                <input type="text" id="txtEditStudentClass" class="form-input">
+            </div>
+            <div class="modal-actions">
+                <button id="btnSaveStudent" class="btn-primary">Save Changes</button>
+                <button id="btnCancelEditStudent" class="btn-secondary">Cancel</button>
+            </div>
+            <div id="editStudentMsg" style="margin-top: 10px; font-size: 0.9em;"></div>
         </div>
      </div>
      

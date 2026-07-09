@@ -85,8 +85,41 @@ switch ($action) {
         $rv = $ado->deleteCourse($dbo, $id);
         echo json_encode($rv);
         break;
+    case "getFaculties":
+        $rv = $ado->getAllFaculties($dbo);
+        echo json_encode($rv);
+        break;
+    case "updateFaculty":
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $rv = $ado->updateFaculty($dbo, $id, $name, $username, $password);
+        echo json_encode($rv);
+        break;
+    case "deleteFaculty":
+        $id = $_POST['id'];
+        $rv = $ado->deleteFaculty($dbo, $id);
+        echo json_encode($rv);
+        break;
+    case "getStudents":
+        $rv = $ado->getStudents($dbo);
+        echo json_encode($rv);
+        break;
+    case "updateStudent":
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $roll_no = $_POST['roll_no'];
+        $class_name = $_POST['class_name'];
+        $rv = $ado->updateStudent($dbo, $id, $name, $roll_no, $class_name);
+        echo json_encode($rv);
+        break;
+    case "deleteStudent":
+        $id = $_POST['id'];
+        $rv = $ado->deleteStudent($dbo, $id);
+        echo json_encode($rv);
+        break;
 }
-
 exit();
 
 ?>

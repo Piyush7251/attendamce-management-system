@@ -173,5 +173,109 @@ class adminDetails {
         }
         return $rv;
     }
+
+    public function updateFaculty($dbo, $id, $name, $username, $password) {
+        $rv = ["status" => "ERROR"];
+        if (trim($password) !== "") {
+            $c = "UPDATE faculty_details SET name = :name, user_name = :username, password = :password WHERE id = :id";
+            $s = $dbo->conn->prepare($c);
+            $params = [":name" => $name, ":username" => $username, ":password" => $password, ":id" => $id];
+        } else {
+            $c = "UPDATE faculty_details SET name = :name, user_name = :username WHERE id = :id";
+            $s = $dbo->conn->prepare($c);
+            $params = [":name" => $name, ":username" => $username, ":id" => $id];
+        }
+        try {
+            $s->execute($params);
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $rv = ["status" => "Username already exists"];
+            } else {
+                error_log("Update Faculty Error: " . $e->getMessage());
+                $rv = ["status" => "Database error"];
+            }
+        }
+        return $rv;
+    }
+
+    public function deleteFaculty($dbo, $id) {
+        $rv = ["status" => "ERROR"];
+        try {
+            $dbo->conn->beginTransaction();
+
+            $s1 = $dbo->conn->prepare("DELETE FROM attendance_details WHERE faculty_id = :id");
+            $s1->execute([":id" => $id]);
+
+            $s2 = $dbo->conn->prepare("DELETE FROM course_allotment WHERE faculty_id = :id");
+            $s2->execute([":id" => $id]);
+
+            $s3 = $dbo->conn->prepare("DELETE FROM faculty_details WHERE id = :id");
+            $s3->execute([":id" => $id]);
+
+            $dbo->conn->commit();
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            $dbo->conn->rollBack();
+            error_log("Delete Faculty Error: " . $e->getMessage());
+            $rv = ["status" => "Database error"];
+        }
+        return $rv;
+    }
+
+    public function getStudents($dbo) {
+        $rv = [];
+        $c = "SELECT id, name, roll_no, class_name FROM student_details ORDER BY roll_no";
+        $s = $dbo->conn->prepare($c);
+        try {
+            $s->execute();
+            $rv = $s->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Get Students Error: " . $e->getMessage());
+        }
+        return $rv;
+    }
+
+    public function updateStudent($dbo, $id, $name, $roll_no, $class_name) {
+        $rv = ["status" => "ERROR"];
+        $c = "UPDATE student_details SET name = :name, roll_no = :roll, class_name = :class_name WHERE id = :id";
+        $s = $dbo->conn->prepare($c);
+        try {
+            $s->execute([":name" => $name, ":roll" => $roll_no, ":class_name" => $class_name, ":id" => $id]);
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $rv = ["status" => "Roll number already exists"];
+            } else {
+                error_log("Update Student Error: " . $e->getMessage());
+                $rv = ["status" => "Database error"];
+            }
+        }
+        return $rv;
+    }
+
+    public function deleteStudent($dbo, $id) {
+        $rv = ["status" => "ERROR"];
+        try {
+            $dbo->conn->beginTransaction();
+
+            $s1 = $dbo->conn->prepare("DELETE FROM attendance_details WHERE student_id = :id");
+            $s1->execute([":id" => $id]);
+
+            $s2 = $dbo->conn->prepare("DELETE FROM course_registration WHERE student_id = :id");
+            $s2->execute([":id" => $id]);
+
+            $s3 = $dbo->conn->prepare("DELETE FROM student_details WHERE id = :id");
+            $s3->execute([":id" => $id]);
+
+            $dbo->conn->commit();
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            $dbo->conn->rollBack();
+            error_log("Delete Student Error: " . $e->getMessage());
+            $rv = ["status" => "Database error"];
+        }
+        return $rv;
+    }
 }
 ?>
