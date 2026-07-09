@@ -79,19 +79,28 @@ switch ($action) {
         echo json_encode($rv);
         break;
     case "downloadReport":
-        $courseid = $_POST['classid'];
-        $sessionid = $_POST['sessionid'];
-        $class_name = $_POST['class_name'];
+        $courseid = $_REQUEST['classid'] ?? '';
+        $sessionid = $_REQUEST['sessionid'] ?? '';
+        $class_name = $_REQUEST['class_name'] ?? '';
         
         $ado = new attendanceDetails();
         $list = $ado->getAttenDanceReport($dbo, $sessionid, $courseid, $facultyid, $class_name);
         
-        $unique_id = uniqid();
-        $filename = "/attendanceapp/report_{$unique_id}.csv";
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
         
-        createCSVReport($list, $filename);
-        $rv = ["filename" => $filename];
-        echo json_encode($rv);
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="Attendance_Report_' . str_replace(' ', '_', $class_name) . '.csv"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        
+        $fp = fopen('php://output', 'w');
+        foreach ($list as $line) {
+            fputcsv($fp, $line);
+        }
+        fclose($fp);
+        exit();
         break;
 }
 

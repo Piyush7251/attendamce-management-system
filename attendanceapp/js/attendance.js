@@ -149,32 +149,8 @@ function saveAttendance(studentid, courseid, sessionid, ondate, ispresent) {
 }
 
 function downloadCSV(sessionid, classid, class_name) {
-    $.ajax({
-        url: "ajaxhandler/attendanceAJAX.php",
-        type: "POST",
-        dataType: "json",
-        data: { sessionid: sessionid, classid: classid, class_name: class_name, action: "downloadReport" },
-        success: function(rv) {
-            // CRITICAL FIX: Proper file download method
-            let downloadUrl = rv['filename'];
-            
-            // Create a hidden anchor tag
-            let a = document.createElement('a');
-            a.href = downloadUrl;
-            a.download = 'Attendance_Report.csv'; // Suggest a filename
-            document.body.appendChild(a);
-            
-            // Trigger the download and remove the tag
-            a.click();
-            document.body.removeChild(a);
-            
-            $("#divReport").html("<span style='color:green;'>Report downloaded successfully!</span>");
-        },
-        error: function(e) {
-            console.error("Failed to download report:", e);
-            alert("Error downloading report.");
-        }
-    });
+    let url = "ajaxhandler/attendanceAJAX.php?action=downloadReport&sessionid=" + sessionid + "&classid=" + classid + "&class_name=" + encodeURIComponent(class_name);
+    window.location.href = url;
 }
 
 // --- Event Listeners ---

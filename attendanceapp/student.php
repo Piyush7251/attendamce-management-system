@@ -54,6 +54,7 @@ if (isset($_SESSION["current_user"]) && $_SESSION["role"] === "STUDENT") {
             <section class="right-panel">
                 <div class="classdetails-area">
                     <h3 class="panel-title-large">Your Attendance Summary</h3>
+                    <p style="font-size: 13px; color: #64748b; margin-top: 4px; margin-bottom: 12px; font-weight: 500;">(Click on a course row below to view detailed date-wise attendance logs)</p>
                 </div>
                 
                 <div class="studentlist-area" id="summaryListArea">
