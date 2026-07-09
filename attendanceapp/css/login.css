@@ -1,0 +1,261 @@
+/* --- Premium Login Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                #070a13;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f8fafc;
+    overflow: hidden;
+}
+
+/* Glassmorphism Card Container */
+.loginform {
+    width: min(420px, 90%);
+    padding: 48px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7),
+                0 0 50px 0 rgba(59, 130, 246, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 26px;
+    color: #f8fafc;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Floating Label Inputs */
+.inputgroup {
+    position: relative;
+    width: 100%;
+}
+
+.inputgroup input {
+    width: 100%;
+    padding: 16px 12px 8px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px 8px 0 0;
+}
+
+.inputgroup input:hover {
+    border-bottom-color: rgba(59, 130, 246, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.inputgroup input:focus {
+    border-color: rgba(59, 130, 246, 0.2);
+    border-bottom-color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+.inputgroup label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    color: #94a3b8;
+    font-size: 16px;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left top;
+}
+
+/* Input Floating Animations */
+.inputgroup input:focus + label,
+.inputgroup input:valid + label {
+    transform: translateY(-24px) scale(0.82);
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+.inputgroup input:valid + label {
+    color: #64748b;
+}
+
+.divcallforaction {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Premium Login Button */
+.btnlogin {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.inactivecolor {
+    background-color: #1e293b;
+    color: #64748b;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    cursor: not-allowed;
+}
+
+.activecolor {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 20px 0 rgba(59, 130, 246, 0.4);
+}
+
+.btnlogin.activecolor:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px 0 rgba(59, 130, 246, 0.5);
+}
+
+.btnlogin.activecolor:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px 0 rgba(59, 130, 246, 0.4);
+}
+
+.btnlogin:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 4px;
+}
+
+/* Shaking Error Message Card */
+.diverror {
+    width: 100%;
+    padding: 14px;
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    font-size: 14px;
+    border-radius: 10px;
+    display: none;
+    text-align: center;
+    font-weight: 500;
+}
+
+.applyerrordiv {
+    display: block;
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+.form-links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.form-links a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.form-links a:hover {
+    color: #93c5fd;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Spinner Loader */
+.lockscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(7, 10, 19, 0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.applylockscreen {
+    display: flex !important;
+}
+
+/* Login Tabs Switcher */
+.login-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 8px;
+}
+
+.login-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.login-tab:hover {
+    color: #f8fafc;
+}
+
+.login-tab.active {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}

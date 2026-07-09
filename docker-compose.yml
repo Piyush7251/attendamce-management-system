@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  db:
+    image: mysql:8.0
+    container_name: attendance_db_service
+    restart: always
+    environment:
+      MYSQL_DATABASE: attendance_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # PHP + Apache Web Service
+  web:
+    build: .
+    container_name: attendance_web_service
+    restart: always
+    ports:
+      - "8000:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=
+      - DB_NAME=attendance_db
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:

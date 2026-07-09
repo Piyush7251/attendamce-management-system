@@ -1,0 +1,33 @@
+# IDE and editor files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# App-specific temporary files
+attendanceapp/report_*.csv
+*.log
+
+# Antigravity system directories
+.gemini/
+.system_generated/
+browser/
+scratchpad_*.md
+login_page_styling_*.png
+test_login_page_*.webp
+test_student_login_*.webp
+staff_login_active_*.png
+student_login_default_*.png
+verify_swapped_tabs_*.webp
+walkthrough.md
+task.md
+implementation_plan.md
+knowledge_base.md

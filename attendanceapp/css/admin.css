@@ -1,0 +1,289 @@
+/* --- Premium Admin Dashboard Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body, html {
+    background: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+                #070a13;
+    color: #f8fafc;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* --- Header Section --- */
+.header-area {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 70px;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btnlogout {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.btnlogout:hover {
+    background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+.btnlogout:active {
+    transform: translateY(1px);
+}
+
+/* --- Main Content Grid --- */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar Left Panel */
+.left-panel {
+    width: 340px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 24px;
+    gap: 24px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Sidebar */
+.left-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.left-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+.left-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/* Dashboard Action Cards */
+.control-panel {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.control-panel:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-top: 0;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+/* Premium Inputs and Select Fields */
+.ddlclass, #ddlFaculty, #ddlCourse, .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #0f172a;
+    color: #f8fafc;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+.ddlclass:hover, #ddlFaculty:hover, #ddlCourse:hover, .form-input:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.ddlclass:focus, #ddlFaculty:focus, #ddlCourse:focus, .form-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+}
+
+/* Custom placeholder */
+.form-input::placeholder {
+    color: #475569;
+}
+
+/* Primary Action Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+/* Right Roster Panel */
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(10, 15, 30, 0.3);
+    padding: 30px 40px;
+    overflow-y: auto;
+    gap: 20px;
+}
+
+/* Custom Scrollbar for Right Panel */
+.right-panel::-webkit-scrollbar {
+    width: 8px;
+}
+.right-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+.right-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.right-panel .classdetails-area {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 16px;
+}
+
+.right-panel .panel-title {
+    font-size: 18px;
+    color: #f8fafc;
+}
+
+#allotmentListArea {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Allotment List Items */
+.allotment-item {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.allotment-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+}
+
+.allotment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.faculty-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.course-info {
+    color: #94a3b8;
+    font-size: 14px;
+    font-family: monospace;
+}
+
+/* Action remove button */
+.btn-remove {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-remove:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.btn-remove:active {
+    transform: translateY(1px);
+}

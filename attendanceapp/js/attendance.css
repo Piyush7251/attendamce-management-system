@@ -1,0 +1,213 @@
+/* --- Global Styles & Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #111827; /* Dark blue-gray */
+    color: #f9fafb;
+    font-size: 16px;
+}
+
+.page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header --- */
+.header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: #1f2937; /* Slightly lighter than body */
+    border-bottom: 1px solid #374151;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e5e7eb;
+}
+
+.btnlogout {
+    padding: 8px 16px;
+    border: 1px solid #4b5563;
+    background-color: transparent;
+    color: #e5e7eb;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btnlogout:hover {
+    background-color: #374151;
+    border-color: #6b7280;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    display: flex;
+    flex-grow: 1;
+    gap: 24px;
+    padding: 24px;
+}
+
+.left-panel {
+    width: 350px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.right-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0; /* Prevents flexbox overflow */
+}
+
+/* --- Control Panels (Session, Courses) --- */
+.control-panel {
+    background-color: #1f2937;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #374151;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #d1d5db;
+}
+
+.ddlclass {
+    width: 100%;
+    padding: 10px;
+    background-color: #374151;
+    border: 1px solid #4b5563;
+    color: #f9fafb;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.classlist-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.classcard {
+    padding: 20px 10px;
+    background-color: #374151;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.classcard:hover {
+    background-color: #4b5563;
+    transform: translateY(-2px);
+}
+
+.classcard.selected {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #60a5fa;
+}
+
+/* --- Details & Student List --- */
+.classdetails-area, .studentlist-area {
+    background-color: #1f2937;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #374151;
+}
+
+.classdetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.code-area { font-size: 24px; font-weight: 700; }
+.title-area { font-size: 18px; color: #9ca3af; flex-grow: 1; }
+#dtpondate {
+    padding: 8px;
+    background-color: #374151;
+    border: 1px solid #4b5563;
+    color: #f9fafb;
+    border-radius: 8px;
+}
+
+.studentlist-header {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #374151;
+    display: grid;
+    grid-template-columns: 50px 120px 1fr 80px;
+    gap: 16px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.studentdetails {
+    display: grid;
+    grid-template-columns: 50px 120px 1fr 80px;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #2d3748;
+    transition: background-color 0.2s ease;
+}
+
+.slno-area { color: #6b7280; }
+.rollno-area { font-weight: 500; }
+.name-area { color: #d1d5db; }
+.checkbox-area { text-align: center; }
+
+.presentcolor { background-color: rgba(16, 185, 129, 0.1); }
+.absentcolor { background-color: transparent; }
+
+.cbpresent {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.reportsection {
+    margin-top: 24px;
+    text-align: right;
+}
+
+#btnReport {
+    padding: 10px 20px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#btnReport:hover {
+    background-color: #4338ca;
+}
