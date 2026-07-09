@@ -90,6 +90,42 @@ function loadAllotments() {
     });
 }
 
+function loadCourseManagement() {
+    $.ajax({
+        url: "ajaxhandler/adminAjax.php",
+        type: "POST",
+        dataType: "json",
+        data: { action: "getCourses" },
+        success: function(rv) {
+            $("#courseStatsArea").text("Total Courses: " + rv.length);
+            
+            if (rv.length === 0) {
+                $("#courseListArea").html("<p style='padding-left: 10px;'>No courses found.</p>");
+                return;
+            }
+
+            let x = '';
+            for (let i = 0; i < rv.length; i++) {
+                let item = rv[i];
+                // Safely store course data directly in DOM
+                x += `
+                <div class="allotment-item" id="courseRow${item.id}">
+                    <div class="allotment-info">
+                        <span class="faculty-name">${item.title}</span>
+                        <span class="course-info">${item.code} (Credits: ${item.credit})</span>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn-edit btnEditCourse" data-course='${JSON.stringify(item)}'>Edit</button>
+                        <button class="btn-remove btnDeleteCourse" data-id="${item.id}" data-title="${item.title}">Delete</button>
+                    </div>
+                </div>
+                `;
+            }
+            $("#courseListArea").html(x);
+        }
+    });
+}
+
 // --- Event Listeners ---
 
 $(function() {
@@ -281,6 +317,116 @@ $(function() {
                 } else {
                     $("#addStudentMsg").html("<span style='color:red'>" + rv.status + "</span>");
                 }
+            }
+        });
+    });
+
+    // --- Course Management Event Listeners ---
+
+    // Tab toggles
+    $(document).on("click", "#tabAllocations", function() {
+        $(".admin-tab").removeClass("active");
+        $(this).addClass("active");
+        $("#manageCoursesTabContent").hide();
+        $("#allocationsTabContent").show();
+        loadAllotments();
+    });
+
+    $(document).on("click", "#tabManageCourses", function() {
+        $(".admin-tab").removeClass("active");
+        $(this).addClass("active");
+        $("#allocationsTabContent").hide();
+        $("#manageCoursesTabContent").show();
+        loadCourseManagement();
+    });
+
+    // Open edit modal
+    $(document).on("click", ".btnEditCourse", function() {
+        let course = $(this).data("course");
+        $("#editCourseId").val(course.id);
+        $("#txtEditCourseTitle").val(course.title);
+        $("#txtEditCourseCode").val(course.code);
+        $("#txtEditCourseCredit").val(course.credit);
+        $("#editCourseMsg").empty();
+        $("#editCourseModal").fadeIn();
+    });
+
+    // Cancel edit
+    $(document).on("click", "#btnCancelEdit", function() {
+        $("#editCourseModal").fadeOut();
+    });
+
+    // Save changes
+    $(document).on("click", "#btnSaveCourse", function() {
+        let id = $("#editCourseId").val();
+        let title = $("#txtEditCourseTitle").val().trim();
+        let code = $("#txtEditCourseCode").val().trim();
+        let credit = $("#txtEditCourseCredit").val().trim();
+
+        if (title === "" || code === "" || credit === "") {
+            $("#editCourseMsg").html("<span style='color:red;'>All fields are required.</span>");
+            return;
+        }
+
+        $("#editCourseMsg").html("<span style='color:blue;'>Saving changes...</span>");
+
+        $.ajax({
+            url: "ajaxhandler/adminAjax.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                action: "updateCourse",
+                id: id,
+                title: title,
+                code: code,
+                credit: credit
+            },
+            success: function(rv) {
+                if (rv.status === "SUCCESS") {
+                    $("#editCourseMsg").html("<span style='color:green;'>Course updated successfully!</span>");
+                    setTimeout(function() {
+                        $("#editCourseModal").fadeOut();
+                        loadCourseManagement();
+                        loadCourses(); // refresh dropdowns
+                    }, 1000);
+                } else {
+                    $("#editCourseMsg").html("<span style='color:red;'>" + rv.status + "</span>");
+                }
+            },
+            error: function() {
+                $("#editCourseMsg").html("<span style='color:red;'>Failed to update course.</span>");
+            }
+        });
+    });
+
+    // Delete course
+    $(document).on("click", ".btnDeleteCourse", function() {
+        let id = $(this).data("id");
+        let title = $(this).data("title");
+
+        if (!confirm("Are you sure you want to delete '" + title + "'? This will also delete all allotments and attendance logs for this course!")) {
+            return;
+        }
+
+        $.ajax({
+            url: "ajaxhandler/adminAjax.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                action: "deleteCourse",
+                id: id
+            },
+            success: function(rv) {
+                if (rv.status === "SUCCESS") {
+                    loadCourseManagement();
+                    loadCourses(); // refresh dropdowns
+                    loadAllotments(); // refresh allotments
+                } else {
+                    alert("Failed to delete course: " + rv.status);
+                }
+            },
+            error: function() {
+                alert("Failed to delete course.");
             }
         });
     });

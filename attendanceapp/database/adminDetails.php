@@ -124,5 +124,54 @@ class adminDetails {
         }
         return $rv;
     }
+
+    public function updateCourse($dbo, $id, $title, $code, $credit) {
+        $rv = ["status" => "ERROR"];
+        $c = "UPDATE course_details SET title = :title, code = :code, credit = :credit WHERE id = :id";
+        $s = $dbo->conn->prepare($c);
+        try {
+            $s->execute([":title" => $title, ":code" => $code, ":credit" => $credit, ":id" => $id]);
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $rv = ["status" => "Course code already exists"];
+            } else {
+                error_log("Update Course Error: " . $e->getMessage());
+                $rv = ["status" => "Database error"];
+            }
+        }
+        return $rv;
+    }
+
+    public function deleteCourse($dbo, $id) {
+        $rv = ["status" => "ERROR"];
+        try {
+            $dbo->conn->beginTransaction();
+
+            // 1. Delete from attendance_details
+            $s1 = $dbo->conn->prepare("DELETE FROM attendance_details WHERE course_id = :id");
+            $s1->execute([":id" => $id]);
+
+            // 2. Delete from course_allotment
+            $s2 = $dbo->conn->prepare("DELETE FROM course_allotment WHERE course_id = :id");
+            $s2->execute([":id" => $id]);
+
+            // 3. Delete from course_registration (just in case)
+            $s3 = $dbo->conn->prepare("DELETE FROM course_registration WHERE course_id = :id");
+            $s3->execute([":id" => $id]);
+
+            // 4. Delete from course_details
+            $s4 = $dbo->conn->prepare("DELETE FROM course_details WHERE id = :id");
+            $s4->execute([":id" => $id]);
+
+            $dbo->conn->commit();
+            $rv = ["status" => "SUCCESS"];
+        } catch (PDOException $e) {
+            $dbo->conn->rollBack();
+            error_log("Delete Course Error: " . $e->getMessage());
+            $rv = ["status" => "Database error"];
+        }
+        return $rv;
+    }
 }
 ?>

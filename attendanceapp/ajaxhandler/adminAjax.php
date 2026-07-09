@@ -72,6 +72,19 @@ switch ($action) {
         $rv = $ado->addStudent($dbo, $name, $roll_no, $class_name);
         echo json_encode($rv);
         break;
+    case "updateCourse":
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $code = $_POST['code'];
+        $credit = $_POST['credit'];
+        $rv = $ado->updateCourse($dbo, $id, $title, $code, $credit);
+        echo json_encode($rv);
+        break;
+    case "deleteCourse":
+        $id = $_POST['id'];
+        $rv = $ado->deleteCourse($dbo, $id);
+        echo json_encode($rv);
+        break;
 }
 
 exit();

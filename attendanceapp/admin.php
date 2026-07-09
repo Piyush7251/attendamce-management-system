@@ -109,13 +109,55 @@ session_start();
 
             <section class="right-panel">
                 <div class="classdetails-area">
-                    <h3 class="panel-title">Current Allocations</h3>
+                    <div class="tab-container">
+                        <button class="admin-tab active" id="tabAllocations">Course Allocations</button>
+                        <button class="admin-tab" id="tabManageCourses">Manage Courses</button>
+                    </div>
                 </div>
-                <div class="studentlist-area" id="allotmentListArea">
-                    <!-- Allocations will be loaded here -->
+                
+                <!-- Tab 1 content: Allocations -->
+                <div class="tab-content" id="allocationsTabContent">
+                    <div class="studentlist-area" id="allotmentListArea">
+                        <!-- Allocations will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Tab 2 content: Course Management -->
+                <div class="tab-content" id="manageCoursesTabContent" style="display: none;">
+                    <div class="course-stats" id="courseStatsArea" style="margin-bottom: 20px; font-weight: 600; font-size: 1.1em; color: #a0aec0; padding-left: 10px;">
+                        <!-- Course stats will load here -->
+                    </div>
+                    <div class="studentlist-area" id="courseListArea">
+                        <!-- Courses will be loaded here -->
+                    </div>
                 </div>
             </section>
         </main>
+     </div>
+     
+     <!-- Edit Course Modal Overlay -->
+     <div id="editCourseModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 class="modal-title">Edit Course</h3>
+            <input type="hidden" id="editCourseId">
+            <div class="form-group">
+                <label>Course Title</label>
+                <input type="text" id="txtEditCourseTitle" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Course Code</label>
+                <input type="text" id="txtEditCourseCode" class="form-input">
+            </div>
+            <div class="form-group">
+                <label>Credits</label>
+                <input type="number" id="txtEditCourseCredit" class="form-input">
+            </div>
+            <div class="modal-actions">
+                <button id="btnSaveCourse" class="btn-primary">Save Changes</button>
+                <button id="btnCancelEdit" class="btn-secondary">Cancel</button>
+            </div>
+            <div id="editCourseMsg" style="margin-top: 10px; font-size: 0.9em;"></div>
+        </div>
      </div>
      
     <script src="js/jquery-4.0.0.min.js"></script>
