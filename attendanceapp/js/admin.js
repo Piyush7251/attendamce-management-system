@@ -79,9 +79,9 @@ function loadAllotments() {
                 <div class="allotment-item">
                     <div class="allotment-info">
                         <span class="faculty-name">${item.faculty_name}</span>
-                        <span class="course-info">${item.code} - ${item.title}</span>
+                        <span class="course-info">${item.code} - ${item.title} (${item.class_name})</span>
                     </div>
-                    <button class="btn-remove" data-facultyid="${item.faculty_id}" data-courseid="${item.course_id}">Remove</button>
+                    <button class="btn-remove" data-facultyid="${item.faculty_id}" data-courseid="${item.course_id}" data-classname="${item.class_name}">Remove</button>
                 </div>
                 `;
             }
@@ -117,9 +117,10 @@ $(function() {
         let sessionid = $("#ddlclass").val();
         let facultyid = $("#ddlFaculty").val();
         let courseid = $("#ddlCourse").val();
+        let class_name = $("#txtAllotClass").val().trim();
 
-        if (sessionid == -1 || facultyid == -1 || courseid == -1) {
-            $("#allocateMsg").html("<span style='color:red'>Please select session, faculty, and course.</span>");
+        if (sessionid == -1 || facultyid == -1 || courseid == -1 || class_name == "") {
+            $("#allocateMsg").html("<span style='color:red'>Please select session, faculty, course, and enter class.</span>");
             return;
         }
 
@@ -133,11 +134,13 @@ $(function() {
                 action: "addAllotment", 
                 sessionid: sessionid,
                 facultyid: facultyid,
-                courseid: courseid
+                courseid: courseid,
+                class_name: class_name
             },
             success: function(rv) {
                 if (rv.status === "SUCCESS") {
                     $("#allocateMsg").html("<span style='color:green'>Allocated successfully!</span>");
+                    $("#txtAllotClass").val("");
                     loadAllotments(); // refresh list
                 } else {
                     $("#allocateMsg").html("<span style='color:red'>Allocation failed.</span>");
@@ -152,6 +155,7 @@ $(function() {
         let sessionid = $("#ddlclass").val();
         let facultyid = $(this).data("facultyid");
         let courseid = $(this).data("courseid");
+        let class_name = $(this).data("classname");
 
         $.ajax({
             url: "ajaxhandler/adminAjax.php",
@@ -161,7 +165,8 @@ $(function() {
                 action: "removeAllotment", 
                 sessionid: sessionid,
                 facultyid: facultyid,
-                courseid: courseid
+                courseid: courseid,
+                class_name: class_name
             },
             success: function(rv) {
                 if (rv.status === "SUCCESS") {

@@ -42,7 +42,7 @@ class attendanceDetails {
         return $rv;
     }
 
-    public function getAttenDanceReport($dbo, $session, $course, $fac) {
+    public function getAttenDanceReport($dbo, $session, $course, $fac, $class_name) {
         $report = [];
         $sessionName = ''; $facname = ''; $courseName = '';
 
@@ -69,6 +69,7 @@ class attendanceDetails {
         array_push($report, ["Session:", $sessionName]);
         array_push($report, ["Course:", $courseName]);
         array_push($report, ["Faculty:", $facname]);
+        array_push($report, ["Class/Group:", $class_name]);
 
         $total = 0; $start = ''; $end = '';
         $c = "SELECT DISTINCT on_date FROM attendance_details 
@@ -94,18 +95,17 @@ class attendanceDetails {
 
         $rv = [];
         $c = "SELECT rsd.id, rsd.roll_no, rsd.name, COUNT(ad.on_date) as attended FROM 
-              (SELECT sd.id, sd.roll_no, sd.name, crd.session_id, crd.course_id 
+              (SELECT sd.id, sd.roll_no, sd.name 
                FROM student_details as sd
-               JOIN course_registration as crd ON sd.id = crd.student_id 
-               WHERE crd.session_id = :session_id AND crd.course_id = :course_id) as rsd 
+               WHERE sd.class_name = :class_name) as rsd 
               LEFT JOIN attendance_details as ad 
-              ON rsd.id = ad.student_id AND rsd.session_id = ad.session_id 
-              AND rsd.course_id = ad.course_id AND status = 'YES' AND ad.faculty_id = :faculty_id
+              ON rsd.id = ad.student_id AND ad.session_id = :session_id 
+              AND ad.course_id = :course_id AND status = 'YES' AND ad.faculty_id = :faculty_id
               GROUP BY rsd.id";
               
         $s = $dbo->conn->prepare($c);
         try {
-            $s->execute([":session_id" => $session, ":course_id" => $course, ":faculty_id" => $fac]);
+            $s->execute([":session_id" => $session, ":course_id" => $course, ":faculty_id" => $fac, ":class_name" => $class_name]);
             $rv = $s->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ee) {
             error_log("Report Generation Error: " . $ee->getMessage());

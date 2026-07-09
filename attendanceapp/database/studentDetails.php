@@ -46,11 +46,12 @@ class studentDetails {
     public function getStudentAttendanceReport($dbo, $student_id, $session_id) {
         $rv = [];
         
-        // 1. Get all courses the student is registered for in this session
-        $c = "SELECT cd.id as course_id, cd.code, cd.title, cd.credit
-              FROM course_registration AS cr
-              JOIN course_details AS cd ON cr.course_id = cd.id
-              WHERE cr.student_id = :sid AND cr.session_id = :sessid";
+        // 1. Get all courses allotted to the student's class in this session
+        $c = "SELECT DISTINCT cd.id as course_id, cd.code, cd.title, cd.credit
+              FROM course_allotment AS ca
+              JOIN course_details AS cd ON ca.course_id = cd.id
+              JOIN student_details AS sd ON sd.class_name = ca.class_name
+              WHERE sd.id = :sid AND ca.session_id = :sessid";
         $s = $dbo->conn->prepare($c);
         
         try {

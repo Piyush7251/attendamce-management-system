@@ -60,9 +60,10 @@ switch ($action) {
         $classid = $_POST['classid'];
         $sessionid = $_POST['sessionid'];
         $ondate = $_POST['ondate'];
+        $class_name = $_POST['class_name'];
         
         $crgo = new CourseRegistrationDetails();
-        $allstudents = $crgo->getRegisteredStudentsWithAttendance($dbo, $sessionid, $classid, $facultyid, $ondate);
+        $allstudents = $crgo->getRegisteredStudentsWithAttendance($dbo, $sessionid, $classid, $facultyid, $class_name, $ondate);
 
         echo json_encode($allstudents);
         break;
@@ -80,9 +81,10 @@ switch ($action) {
     case "downloadReport":
         $courseid = $_POST['classid'];
         $sessionid = $_POST['sessionid'];
+        $class_name = $_POST['class_name'];
         
         $ado = new attendanceDetails();
-        $list = $ado->getAttenDanceReport($dbo, $sessionid, $courseid, $facultyid);
+        $list = $ado->getAttenDanceReport($dbo, $sessionid, $courseid, $facultyid, $class_name);
         
         $unique_id = uniqid();
         $filename = "/attendanceapp/report_{$unique_id}.csv";

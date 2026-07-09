@@ -52,6 +52,7 @@ session_start();
      </div>
      <input type="hidden" id="hiddenFacId" value=<?php echo($facid) ?>>
      <input type="hidden" id="hiddenSelectedCourseID" value=-1>
+     <input type="hidden" id="hiddenSelectedClassName" value="">
     <script src="js/jquery-4.0.0.min.js"></script>
     <script src="js/attendance.js?v=<?php echo time(); ?>"></script>
     <!--renamed the files just to keep the filenames

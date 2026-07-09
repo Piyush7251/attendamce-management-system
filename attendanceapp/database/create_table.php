@@ -40,7 +40,8 @@ $tables = [
         faculty_id int,
         course_id int,
         session_id int,
-        primary key(faculty_id,course_id,session_id)
+        class_name varchar(50),
+        primary key(faculty_id,course_id,session_id,class_name)
     )",
     "attendance_details" => "CREATE TABLE IF NOT EXISTS attendance_details (
         faculty_id int,

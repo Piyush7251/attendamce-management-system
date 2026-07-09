@@ -28,7 +28,7 @@ class faculty_details {
 
     public function getCoursesInASession($dbo, $sessionid, $facid) {
         $rv = [];
-        $c = "SELECT cd.id, cd.code, cd.title FROM course_allotment AS ca
+        $c = "SELECT cd.id, cd.code, cd.title, ca.class_name FROM course_allotment AS ca
               JOIN course_details AS cd ON ca.course_id = cd.id 
               WHERE ca.faculty_id = :facid AND ca.session_id = :sessionid";
         $s = $dbo->conn->prepare($c);

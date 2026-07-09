@@ -39,14 +39,16 @@ switch ($action) {
         $facultyid = $_POST['facultyid'];
         $courseid = $_POST['courseid'];
         $sessionid = $_POST['sessionid'];
-        $rv = $ado->addAllotment($dbo, $facultyid, $courseid, $sessionid);
+        $class_name = $_POST['class_name'];
+        $rv = $ado->addAllotment($dbo, $facultyid, $courseid, $sessionid, $class_name);
         echo json_encode($rv);
         break;
     case "removeAllotment":
         $facultyid = $_POST['facultyid'];
         $courseid = $_POST['courseid'];
         $sessionid = $_POST['sessionid'];
-        $rv = $ado->removeAllotment($dbo, $facultyid, $courseid, $sessionid);
+        $class_name = $_POST['class_name'];
+        $rv = $ado->removeAllotment($dbo, $facultyid, $courseid, $sessionid, $class_name);
         echo json_encode($rv);
         break;
     case "addFaculty":

@@ -14,7 +14,7 @@ function getCourseCardHTML(classlist) {
     for (let i = 0; i < classlist.length; i++) {
         let cc = classlist[i];
         // Safely store the object data directly in the DOM element
-        x += `<div class="classcard" data-classobject='${JSON.stringify(cc)}'>${cc['code']}</div>`;
+        x += `<div class="classcard" data-classobject='${JSON.stringify(cc)}'>${cc['code']} (${cc['class_name']})</div>`;
     }
     return x;
 }
@@ -108,12 +108,12 @@ function fetchFacultyCourses(sessionid) {
     });
 }
 
-function fetchStudentList(sessionid, classid, ondate) {
+function fetchStudentList(sessionid, classid, ondate, class_name) {
     $.ajax({
         url: "ajaxhandler/attendanceAJAX.php",
         type: "POST",
         dataType: "json",
-        data: { ondate: ondate, sessionid: sessionid, classid: classid, action: "getStudentList" },
+        data: { ondate: ondate, sessionid: sessionid, classid: classid, class_name: class_name, action: "getStudentList" },
         beforeSend: function() {
             $("#studentlistarea").html("<p>Loading student list...</p>");
         },
@@ -148,12 +148,12 @@ function saveAttendance(studentid, courseid, sessionid, ondate, ispresent) {
     });
 }
 
-function downloadCSV(sessionid, classid) {
+function downloadCSV(sessionid, classid, class_name) {
     $.ajax({
         url: "ajaxhandler/attendanceAJAX.php",
         type: "POST",
         dataType: "json",
-        data: { sessionid: sessionid, classid: classid, action: "downloadReport" },
+        data: { sessionid: sessionid, classid: classid, class_name: class_name, action: "downloadReport" },
         success: function(rv) {
             // CRITICAL FIX: Proper file download method
             let downloadUrl = rv['filename'];
@@ -218,16 +218,18 @@ $(function() {
 
         let classobject = $(this).data('classobject');
         $("#hiddenSelectedCourseID").val(classobject['id']);
+        $("#hiddenSelectedClassName").val(classobject['class_name']);
         
         let x = getClassdetailsAreaHTML(classobject);
         $("#classdetailsarea").html(x);
         
         let sessionid = $("#ddlclass").val();
         let classid = classobject['id'];
+        let class_name = classobject['class_name'];
         let ondate = $("#dtpondate").val();
         
         if (sessionid != -1) {
-            fetchStudentList(sessionid, classid, ondate);
+            fetchStudentList(sessionid, classid, ondate, class_name);
         }
     });
 
@@ -244,10 +246,11 @@ $(function() {
     $(document).on("change", "#dtpondate", function() {
         let sessionid = $("#ddlclass").val();
         let classid = $("#hiddenSelectedCourseID").val();
+        let class_name = $("#hiddenSelectedClassName").val();
         let ondate = $("#dtpondate").val();
         
-        if (sessionid != -1) {
-            fetchStudentList(sessionid, classid, ondate);
+        if (sessionid != -1 && classid != -1) {
+            fetchStudentList(sessionid, classid, ondate, class_name);
         }
     });
 
@@ -255,6 +258,7 @@ $(function() {
         $("#divReport").html("<span style='color:blue;'>Generating report...</span>");
         let sessionid = $("#ddlclass").val();
         let classid = $("#hiddenSelectedCourseID").val();
-        downloadCSV(sessionid, classid);
+        let class_name = $("#hiddenSelectedClassName").val();
+        downloadCSV(sessionid, classid, class_name);
     });
 });

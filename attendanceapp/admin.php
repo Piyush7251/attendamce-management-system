@@ -44,6 +44,10 @@ session_start();
                         <label>Course</label>
                         <select id="ddlCourse"></select>
                     </div>
+                    <div class="form-group">
+                        <label>Class/Group (e.g., BCA)</label>
+                        <input type="text" id="txtAllotClass" class="form-input" placeholder="e.g. BCA, MCA">
+                    </div>
                     <button id="btnAllocate" class="btn-primary">Assign Course</button>
                     <div id="allocateMsg" style="margin-top: 10px; font-size: 0.9em;"></div>
                 </div>

@@ -30,7 +30,7 @@ class adminDetails {
 
     public function getCourseAllotments($dbo, $sessionid) {
         $rv = [];
-        $c = "SELECT ca.faculty_id, ca.course_id, cd.title, cd.code, fd.name as faculty_name 
+        $c = "SELECT ca.faculty_id, ca.course_id, ca.class_name, cd.title, cd.code, fd.name as faculty_name 
               FROM course_allotment AS ca
               JOIN course_details AS cd ON ca.course_id = cd.id 
               JOIN faculty_details AS fd ON ca.faculty_id = fd.id
@@ -45,12 +45,12 @@ class adminDetails {
         return $rv;
     }
 
-    public function addAllotment($dbo, $facultyid, $courseid, $sessionid) {
+    public function addAllotment($dbo, $facultyid, $courseid, $sessionid, $class_name) {
         $rv = ["status" => "ERROR"];
-        $c = "INSERT IGNORE INTO course_allotment (faculty_id, course_id, session_id) VALUES (:fid, :cid, :sid)";
+        $c = "INSERT IGNORE INTO course_allotment (faculty_id, course_id, session_id, class_name) VALUES (:fid, :cid, :sid, :class_name)";
         $s = $dbo->conn->prepare($c);
         try {
-            $s->execute([":fid" => $facultyid, ":cid" => $courseid, ":sid" => $sessionid]);
+            $s->execute([":fid" => $facultyid, ":cid" => $courseid, ":sid" => $sessionid, ":class_name" => $class_name]);
             $rv = ["status" => "SUCCESS"];
         } catch (PDOException $e) {
             error_log("Add Allotment Error: " . $e->getMessage());
@@ -58,12 +58,12 @@ class adminDetails {
         return $rv;
     }
 
-    public function removeAllotment($dbo, $facultyid, $courseid, $sessionid) {
+    public function removeAllotment($dbo, $facultyid, $courseid, $sessionid, $class_name) {
         $rv = ["status" => "ERROR"];
-        $c = "DELETE FROM course_allotment WHERE faculty_id = :fid AND course_id = :cid AND session_id = :sid";
+        $c = "DELETE FROM course_allotment WHERE faculty_id = :fid AND course_id = :cid AND session_id = :sid AND class_name = :class_name";
         $s = $dbo->conn->prepare($c);
         try {
-            $s->execute([":fid" => $facultyid, ":cid" => $courseid, ":sid" => $sessionid]);
+            $s->execute([":fid" => $facultyid, ":cid" => $courseid, ":sid" => $sessionid, ":class_name" => $class_name]);
             $rv = ["status" => "SUCCESS"];
         } catch (PDOException $e) {
             error_log("Remove Allotment Error: " . $e->getMessage());
